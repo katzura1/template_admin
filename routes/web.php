@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
  */
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
-Route::post('login/authenticate', [AuthController::class, 'authenticate'])->name('login.authenticate');
-Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('password.request');
+Route::get('recover-password', [AuthController::class, 'recoverPassword'])->name('password.reset');
+Route::post('login/authenticate', [AuthController::class, 'authenticate'])->name('login.authenticate')->middleware('guest');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::post('forgot-password', [AuthController::class, 'sendEmailForgot'])->name('password.email');
+Route::post('recover-password', [AuthController::class, 'changePassword'])->name('password.update');
