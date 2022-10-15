@@ -13,14 +13,24 @@
                 <i class="fas fa-th-large"></i>
             </a>
         </li>
+        <li class="nav-item">
+            <div class="theme-switch-wrapper nav-link">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" name="theme-switch" id="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Name User
+                {{ Auth::user()->name }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
                 <a class="dropdown-item" href="#">Profile</a>
-                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item" href="#"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="post">@csrf</form>
             </div>
         </li>
     </ul>
@@ -46,7 +56,7 @@
                     Guest
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
-                    <a class="dropdown-item" href="#">Login</a>
+                    <a class="dropdown-item" href="{{ route('login') }}">Login</a>
                 </div>
             </li>
         </ul>
