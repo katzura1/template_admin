@@ -6,11 +6,10 @@ Login
 
 @section('content')
 <div class="login-box">
-    <div class="login-logo">
-        <a href="#">{{ env('APP_NAME') }}</a>
-    </div>
-
-    <div class="card">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a class="h1" href="#">{{ env('APP_NAME') }}</a>
+        </div>
         <div class="card-body login-card-body">
             <p class="login-box-msg">Sign in to start your session</p>
             @if ($errors->any())
@@ -20,6 +19,11 @@ Login
                     <li>{{ $error }}</li>
                     @endforeach
                 </ul>
+            </div>
+            @endif
+            @if(session()->has('verified'))
+            <div class="alert alert-success border-left-danger" role="alert">
+                Your account has been active.
             </div>
             @endif
             <form action="{{ route('login.authenticate') }}" method="post">

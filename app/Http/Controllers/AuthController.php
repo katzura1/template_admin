@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -90,5 +94,56 @@ class AuthController extends Controller
         return $status === Password::PASSWORD_RESET
         ? redirect()->route('login')->with('status', __($status))
         : back()->withErrors(['email' => [__($status)]]);
+    }
+
+    public function register()
+    {
+        return view('pages.auth.register');
+    }
+
+    public function registerAccount(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|min:4|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|confirmed',
+            'id_user_level' => 'required|numeric|exists:user_levels,id',
+        ]);
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        $user = User::create($validatedData);
+
+        event(new Registered($user));
+
+        return redirect(route('verification.notice'))->with('success', 'Account Create Successfully. Please check you email for verification');
+    }
+
+    public function verify()
+    {
+        return view('pages.auth.verify-email');
+    }
+
+    public function verifyAccount(Request $request, $id, $hash)
+    {
+        // $request->fulfill();
+        $user = User::find($id);
+        // dd($user);
+
+        if ($id != $user->getKey()) {
+            throw new AuthorizationException();
+        }
+
+        if ($user->markEmailAsVerified()) {
+            event(new Verified($user));
+        }
+
+        // return redirect('/home');
+        return redirect()->route('login')->with('verified', true);
+    }
+
+    public function resendVerifyEmail(Request $request)
+    {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('success', 'Verification link sent!');
     }
 }

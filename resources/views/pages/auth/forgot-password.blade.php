@@ -6,11 +6,11 @@ Reset Password
 
 @section('content')
 <div class="login-box">
-    <div class="login-logo">
-        <a href="#">{{ env('APP_NAME') }}</a>
-    </div>
 
-    <div class="card">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a class="h1" href="#">{{ env('APP_NAME') }}</a>
+        </div>
         <div class="card-body login-card-body">
             <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
             @if ($errors->any())

@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-Reset Password
+Create Account
 @endsection
 
 @section('content')
@@ -11,8 +11,7 @@ Reset Password
             <a class="h1" href="#">{{ env('APP_NAME') }}</a>
         </div>
         <div class="card-body login-card-body">
-            <p class="login-box-msg">You are only one step a way from your new password, recover your password now.
-            </p>
+            <p class="login-box-msg">Register New Membership</p>
             @if ($errors->any())
             <div class="alert alert-danger border-left-danger" role="alert">
                 <ul class="pl-4 my-2">
@@ -22,12 +21,31 @@ Reset Password
                 </ul>
             </div>
             @endif
-            <form action="{{ route('password.update') }}" method="POST">
+            @if (session()->has('success'))
+            <div class="alert alert-success border-left-success" role="alert">
+                {{ session('success') }}
+            </div>
+            @endif
+            <form action="{{ route('register.user') }}" method="post">
                 @csrf
-                <input type="hidden" name="token" value="{{ $token }}">
-                <input type="hidden" name="email" value="{{ $email }}">
+                <input type="hidden" name="id_user_level" value="2">
                 <div class="input-group mb-3">
-                    <input type="text" value="{{ $email }}" class="form-control" readonly>
+                    <input type="text" name="name" class="form-control" placeholder="Full Name"
+                        value="{{ old('name') }}" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}"
+                        required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="input-group mb-3">
                     <input type="text" name="password" class="form-control" placeholder="Password" required>
@@ -38,7 +56,7 @@ Reset Password
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="text" name="password_confirmation" class="form-control" placeholder="Confirm Password"
+                    <input type="text" name="password_confirmation" class="form-control" placeholder="Password"
                         required>
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -47,18 +65,17 @@ Reset Password
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block">Change password</button>
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
                     </div>
+
                 </div>
             </form>
-            <p class="mt-3 mb-1">
-                <a href="{{ route('login') }}">Login</a>
+            <p class="mb-1">
+                <a href="{{ route('password.request') }}">I forgot my password</a>
             </p>
-            {{-- <p class="mb-0">
-                <a href="register.html" class="text-center">Register a new membership</a>
-            </p> --}}
         </div>
+
     </div>
 </div>
 @endsection

@@ -60,6 +60,11 @@
                                 <h5 class="card-title m-0">Featured</h5>
                             </div>
                             <div class="card-body">
+                                @if(session()->has('success'))
+                                <div class="alert alert-success border-left-danger" role="alert">
+                                    {{ session()->get('success') }}
+                                </div>
+                                @endif
                                 <h6 class="card-title">Special title treatment</h6>
                                 <p class="card-text">With supporting text below as a natural lead-in to additional
                                     content.</p>
