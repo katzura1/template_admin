@@ -1,14 +1,11 @@
-<footer class="main-footer">
-    @if (!Auth::check())
-    <div class="container">
-        @endif
-        <div class="float-right d-none d-sm-inline">
-            Anything you want
+<footer>
+    <div class="footer clearfix mb-0 text-muted">
+        <div class="float-start">
+            <p>2021 &copy; Mazer</p>
         </div>
-
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
-        reserved.
-        @if (!Auth::check())
+        <div class="float-end">
+            <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
+                    href="https://saugi.me">Saugi</a></p>
+        </div>
     </div>
-    @endif
 </footer>

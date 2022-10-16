@@ -92,7 +92,7 @@ class AuthController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-        ? redirect()->route('login')->with('status', __($status))
+        ? redirect(route('login'))->with('success', __($status))
         : back()->withErrors(['email' => [__($status)]]);
     }
 
@@ -114,7 +114,7 @@ class AuthController extends Controller
 
         event(new Registered($user));
 
-        return redirect(route('verification.notice'))->with('success', 'Account Create Successfully. Please check you email for verification');
+        return redirect(route('home'))->with('success', 'Account Create Successfully. Please check you email for verification');
     }
 
     public function verify()

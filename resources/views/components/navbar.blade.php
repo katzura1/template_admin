@@ -1,65 +1,90 @@
-<nav class="main-header navbar navbar-expand navbar-white navbar-light border-bottom-0">
-
-    @if (Auth::check())
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                <i class="fas fa-th-large"></i>
+<header class='mb-3'>
+    <nav class="navbar navbar-expand navbar-light navbar-top">
+        <div class="container-fluid">
+            <a href="#" class="burger-btn d-block">
+                <i class="bi bi-justify fs-3"></i>
             </a>
-        </li>
-        <li class="nav-item">
-            <div class="theme-switch-wrapper nav-link">
-                <label class="theme-switch" for="checkbox">
-                    <input type="checkbox" name="theme-switch" id="checkbox">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                {{ Auth::user()->name }}
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
-                <a class="dropdown-item" href="#">Profile</a>
-                <a class="dropdown-item" href="#"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                <form id="logout-form" action="{{ route('logout') }}" method="post">@csrf</form>
-            </div>
-        </li>
-    </ul>
-    @else
-    <div class="container">
-        <a href="{{ route('home') }}" class="navbar-brand">
-            <img src="{{ asset('img/AdminLTELogo.png') }}" alt="Logo" class="brand-image img-circle elevation-3"
-                style="opacity: .8">
-            <span class="brand-text font-weight-light">{{ env('APP_NAME') }}</span>
-        </a>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <div class="theme-switch-wrapper nav-link">
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" name="theme-switch" id="checkbox">
-                        <span class="slider round"></span>
-                    </label>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-lg-0">
+                    <li class="nav-item dropdown me-3">
+                        <a class="nav-link active dropdown-toggle text-gray-600" href="#" data-bs-toggle="dropdown"
+                            data-bs-display="static" aria-expanded="false">
+                            <i class='bi bi-bell bi-sub fs-4'></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown"
+                            aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-header">
+                                <h6>Notifications</h6>
+                            </li>
+                            <li class="dropdown-item notification-item">
+                                <a class="d-flex align-items-center" href="#">
+                                    <div class="notification-icon bg-primary">
+                                        <i class="bi bi-cart-check"></i>
+                                    </div>
+                                    <div class="notification-text ms-4">
+                                        <p class="notification-title font-bold">Successfully check out</p>
+                                        <p class="notification-subtitle font-thin text-sm">Order ID #256</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="dropdown-item notification-item">
+                                <a class="d-flex align-items-center" href="#">
+                                    <div class="notification-icon bg-success">
+                                        <i class="bi bi-file-earmark-check"></i>
+                                    </div>
+                                    <div class="notification-text ms-4">
+                                        <p class="notification-title font-bold">Homework submitted</p>
+                                        <p class="notification-subtitle font-thin text-sm">Algebra math
+                                            homework</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <p class="text-center py-2 mb-0"><a href="#">See all notification</a></p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-menu d-flex">
+                            <div class="user-img d-flex align-items-center">
+                                <div class="avatar avatar-md">
+                                    <img src="assets/images/faces/1.jpg">
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"
+                        style="min-width: 11rem;">
+                        <li>
+                            <h6 class="dropdown-header">Hello, {{ Auth::check() ? Auth::user()->name : 'Guest' }}!</h6>
+                        </li>
+                        @if (Auth::check())
+                        <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
+                                Profile</a></li>
+                        <li>
+                            <a class="dropdown-item" href="#"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="icon-mid bi bi-box-arrow-left me-2"></i>
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="post">@csrf</form>
+                        </li>
+                        @else
+                        <li><a class="dropdown-item" href="{{ route('login') }}"><i
+                                    class="icon-mid bi bi-box-arrow-left me-2"></i>
+                                Login</a></li>
+                        @endif
+                    </ul>
                 </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Guest
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
-                    <a class="dropdown-item" href="{{ route('login') }}">Login</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-    @endif
-</nav>
+            </div>
+        </div>
+    </nav>
+</header>
