@@ -36,7 +36,8 @@ Sign In
                 <form action="{{ route('login.authenticate') }}" method="post">
                     @csrf
                     <div class="form-group position-relative has-icon-left mb-2">
-                        <input type="email" name="email" class="form-control" placeholder="Email">
+                        <input type="email" name="email" class="form-control" placeholder="Email"
+                            value="{{ old('email') }}">
                         <div class="form-control-icon">
                             <i class="fa fa-envelope"></i>
                         </div>

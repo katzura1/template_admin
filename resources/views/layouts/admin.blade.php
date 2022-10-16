@@ -13,6 +13,8 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.png') }}" type="image/png">
 
     <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/simple-datatables/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/simple-datatables.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/@fortawesome/fontawesome-free/css/all.min.css') }}">
     @stack('css')
 </head>
@@ -22,41 +24,15 @@
         @include('components.sidebar')
         <div id="main" class='layout-navbar'>
             @include('components.navbar')
-            <div id="main-content">
-                <div class="page-heading">
-                    <div class="page-title">
-                        <div class="row">
-                            <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3>Welcome to {{ env('APP_NAME') }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <section class="section">
-                        <div class="card card-outline card-success">
-                            <div class="card-header">
-                            </div>
-                            <div class="card-body">
-                                @if (session()->has('success'))
-                                <div class="alert alert-success">
-                                    <h4 class="alert-heading">Success</h4>
-                                    <p>{{ session('success') }}</p>
-                                </div>
-                                @else
-                                <p>Welcome to our site.</p>
-                                @endif
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                @include('components.footer')
-            </div>
+            @yield('content')
         </div>
     </div>
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
     <script src="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/pages/sweetalert2.js') }}"></script> --}}
+    <script src="{{ asset('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
+    <script src="{{ asset('assets/js/master.js') }}"></script>
     @stack('js')
 </body>
 
