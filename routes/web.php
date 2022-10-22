@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\UserLevelController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,11 +44,28 @@ Route::middleware(['auth'])->group(function () {
 Route::get('verify-email', [HomeController::class, 'index'])->name('verification.notice');
 Route::get('email/verify/{id}/{hash}', [AuthController::class, 'verifyAccount'])->middleware(['guest', 'signed'])->name('verification.verify');
 Route::post('email/verification-notification', [AuthController::class, 'resendVerifyEmail'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
+/*
+|--------------------------------------------------------------------------
+| User Level Routes
+|--------------------------------------------------------------------------
+ */
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('user-level', [UserLevelController::class, 'index'])->name('user-level');
     Route::get('user-level/data', [UserLevelController::class, 'data'])->name('user-level.data');
 
     Route::post('user-level/store', [UserLevelController::class, 'store'])->name('user-level.store');
     Route::post('user-level/update', [UserLevelController::class, 'update'])->name('user-level.update');
+});
+/*
+|--------------------------------------------------------------------------
+| Menu Routes
+|--------------------------------------------------------------------------
+ */
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('menu', [MenuController::class, 'index'])->name('menu');
+    Route::get('menu/data', [MenuController::class, 'data'])->name('menu.data');
+
+    Route::post('menu/store', [MenuController::class, 'store'])->name('menu.store');
+    Route::post('menu/update', [MenuController::class, 'update'])->name('menu.update');
+    Route::post('menu/destroy', [MenuController::class, 'destroy'])->name('menu.destroy');
 });

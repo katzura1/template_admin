@@ -19,6 +19,10 @@
     {{-- SweetAlert --}}
     <link rel="stylesheet" href="{{ asset('vendor/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 
+    {{-- Select2 --}}
+    <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css?v=3.2.0') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
@@ -111,12 +115,17 @@
         {{-- SweetAlert --}}
         <script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"></script>
 
+        {{-- Select2 --}}
+        <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}"></script>
+
         <script src="{{ asset('js/adminlte.min.js?v=3.2.0') }}"></script>
         <script src="{{ asset('js/master.js') }}"></script>
         <script>
             $('a[data-widget=control-sidebar]').on('click', function(){
                 // alert('Clicked');
             });
+
+            const token = "{{ csrf_token() }}";
         </script>
         @stack('js')
     </body>
