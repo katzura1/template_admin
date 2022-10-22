@@ -121,11 +121,41 @@
         <script src="{{ asset('js/adminlte.min.js?v=3.2.0') }}"></script>
         <script src="{{ asset('js/master.js') }}"></script>
         <script>
-            $('a[data-widget=control-sidebar]').on('click', function(){
-                // alert('Clicked');
-            });
-
             const token = "{{ csrf_token() }}";
+
+            function setMenu(url= '', url_1 = '', url_2 = '', url_3 = '') {
+                if (url_1 != '') {
+                    url += '/' + url_1;
+                }
+                if (url_2 != '') {
+                    url += '/' + url_2;
+                }
+                if (url_3 != '') {
+                    url += '/' + url_3;
+                }
+                // for sidebar menu entirely but not cover treeview
+                $("ul.nav-sidebar a")
+                    .filter(function() {
+                        return this.href == url;
+                    })
+                    .addClass("active");
+
+                // for treeview
+                $("ul.nav-treeview a")
+                    .filter(function() {
+                        return this.href == url;
+                    })
+                    .parentsUntil(".nav-sidebar > .nav-treeview")
+                    .addClass("menu-open")
+                    .prev("a")
+                    .addClass("active");
+            }
+
+            const url = "{{ URL::to('/') }}";
+            const url_segment1 = "{{ Request::segment(1) }}";
+            const url_segment2 = "{{ Request::segment(2) }}";
+            const url_segment3 = "{{ Request::segment(3) }}";
+            setMenu(url, url_segment1, url_segment2, url_segment3);
         </script>
         @stack('js')
     </body>

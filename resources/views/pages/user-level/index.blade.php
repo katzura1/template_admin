@@ -21,7 +21,7 @@ User Level
     <div class="card-body">
         <div class="row">
             <div class="col-md-12 table-responsive">
-                <table class="table table-sm table-striped" id="table">
+                <table class="table table-sm table-striped" style="width: 100%" id="table">
                     <thead>
                         <tr>
                             <th>No</th>

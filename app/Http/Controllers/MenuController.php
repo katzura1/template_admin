@@ -21,15 +21,22 @@ class MenuController extends Controller
 
     public function data(Request $request)
     {
+        $where = [];
         $search = $request->search['value'];
         //search param
-        $searchParam = [
-            ['menus.name', 'LIKE', '%' . $search . '%']
-        ];
+        $where[] = ['menus.name', 'LIKE', '%' . $search . '%'];
+        if ($request->type) {
+            $where[] = ['menus.type', '=', $request->type];
+            if ($request->type == 'child' && $request->id_parent) {
+                $where[] = ['menus.id_parent', '=', $request->id_parent];
+            }
+        }
         //get request page
         $request['page'] = $request->start == 0 ? 1 : round(($request->start + $request->length) / $request->length);
         //get data 
-        $datas = Menu::with('parent')->where($searchParam)->paginate($request->length ?? 10)->toArray();
+        $datas = Menu::select('menus.id', 'menus.name', 'menus.slug', 'menus.type', 'menus.id_parent', 'menus.order')
+            ->with('parent')->where($where)
+            ->paginate($request->length ?? 10)->toArray();
         $final['draw'] = $request['draw'];
         $final['recordsTotal'] = $datas['total'];
         $final['recordsFiltered'] = $datas['total'];
@@ -43,6 +50,7 @@ class MenuController extends Controller
             'name' => 'required|unique:menus',
             'slug' => 'required|string|max:100',
             'type' => 'required|in:parent,child',
+            'order' => 'required|numeric',
         ]);
 
         $validator->sometimes('id_parent', 'required|integer|min:0', function ($input) {
@@ -73,6 +81,7 @@ class MenuController extends Controller
             'name' => 'required|unique:menus,name,' . $request->id,
             'slug' => 'required|string|max:100',
             'type' => 'required|in:parent,child',
+            'order' => 'required|numeric',
         ]);
 
         $validator->sometimes('id_parent', 'required|integer|min:0', function ($input) {

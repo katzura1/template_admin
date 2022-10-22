@@ -25,38 +25,29 @@
             <ul class="nav nav-pills nav-sidebar flex-column nav-collapse-hide-child nav-flat" data-widget="treeview"
                 role="menu" data-accordion="false">
 
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                @foreach ($sidebars as $sidebar)
+                <li class="nav-item">
+                    <a href="{{ url($sidebar->slug) }}" class="nav-link">
+                        <i class="nav-icon fa fa-folder"></i>
                         <p>
-                            Starter Pages
+                            {{ $sidebar->name }}
+                            @if (sizeof($sidebar->children)>0)
                             <i class="right fas fa-angle-left"></i>
+                            @endif
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @foreach ($sidebar->children as $children)
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">
+                            <a href="{{ url($children->slug) }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Active Page</p>
+                                <p>{{ $children->name }}</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Inactive Page</p>
-                            </a>
-                        </li>
+                        @endforeach
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Simple Link
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>
-                </li>
+                @endforeach
             </ul>
         </nav>
 

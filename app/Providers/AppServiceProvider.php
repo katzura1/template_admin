@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Menu;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //share sidebar variable
+        $sidebars = Menu::with('children')->where('type', 'parent')->orderBy('order')->get();
+        View::share('sidebars', $sidebars);
     }
 }

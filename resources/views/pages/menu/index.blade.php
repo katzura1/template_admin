@@ -20,8 +20,31 @@ Menu
     </div>
     <div class="card-body">
         <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="select_type">Type</label>
+                    <select name="select_type" id="select_type"
+                        class="form-control form-control-sm select2 select-table">
+                        <option value="">All</option>
+                        <option value="parent">Parent</option>
+                        <option value="child">Children</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 select-parent">
+                <div class="form-group">
+                    <label for="select_parent">Parent</label>
+                    <select name="select_parent" id="select_parent"
+                        class="form-control form-control-sm select2 select-table" style="width: 100%" required>
+                        <option value=""></option>
+                        @foreach ($parents as $parent)
+                        <option value="{{ $parent->id }}">{{ $parent->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
             <div class="col-md-12 table-responsive">
-                <table class="table table-sm table-striped" id="table">
+                <table class="table table-sm table-striped" id="table" style="width: 100%">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -73,7 +96,7 @@ Menu
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="name">Parent</label>
+                        <label for="id_parent">Parent</label>
                         <select name="id_parent" id="id_parent" class="form-control form-control-sm select2"
                             style="width: 100%" required>
                             <option value=""></option>
@@ -81,6 +104,11 @@ Menu
                             <option value="{{ $parent->id }}">{{ $parent->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="order">Order</label>
+                        <input type="number" name="order" id="order" class="form-control form-control-sm" min="0"
+                            required>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -158,6 +186,10 @@ Menu
             ajax : {
                 url : "{{ route('menu.data') }}",
                 type : "GET",
+                data : function(d){
+                    d.type = $('select[name=select_type]').val();
+                    d.id_parent = $('select[name=select_parent]').val();
+                }
             },
             lengthMenu: [ [10, 25, 50], [10, 25, 50] ],
             columns : [
@@ -246,8 +278,17 @@ Menu
         });
 
         //Initialize Select2 Elements
+        $('select[name=select_type]').select2({
+            placeholder : 'Choose Type',
+            allowClear : true,
+        })
+
         $('select[name=type]').select2({
             placeholder : 'Choose Type'
+        })
+
+        $('select[name=select_parent]').select2({
+            placeholder : 'Choose Parent'
         })
 
         $('select[name=id_parent]').select2({
@@ -261,6 +302,15 @@ Menu
         $('select[name=type]').on('change', function(){
             const val = $(this).val();
             val=='child'?$('select[name=id_parent]').prop('disabled',false):$('select[name=id_parent]').prop('disabled',true);
+        })
+
+        $('select[name=select_type]').on('change', function(){
+            const val = $(this).val();
+            val=='child'?$('select[name=select_parent]').prop('disabled',false):$('select[name=select_parent]').prop('disabled',true);
+        })
+
+        $('.select-table').on('change', function(){
+            table.ajax.reload();
         })
 
         //triger click
@@ -284,9 +334,10 @@ Menu
             $('#modal-form input[name=slug]').val(data.slug);
             $('#modal-form select[name=type]').val(data.type).change();
             $('#modal-form select[name=id_parent]').val(data.id_parent).change();
+            $('#modal-form input[name=order]').val(data.order);
             //show modal
             $('#modal-form').modal('show');
-        });
+        })
 
         $('#table tbody').on('click','button.btn-user', function(){
             const data = table.row($(this).parents('tr')).data();
@@ -351,7 +402,7 @@ Menu
                                 //close modal
                                 $('#modal-form').modal('hide');
                                 //refresh table
-                                table.ajax.reload();
+                                location.reload();
                             }else{
                                 Swal.fire({
                                     title : 'Error',

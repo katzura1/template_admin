@@ -19,6 +19,7 @@ class CreateMenuTable extends Migration
             $table->unsignedBigInteger('id_parent')->nullable();
             $table->string('slug');
             $table->enum('type', ['parent', 'child']);
+            $table->tinyInteger('order');
             $table->timestamps();
         });
 
@@ -34,6 +35,9 @@ class CreateMenuTable extends Migration
      */
     public function down()
     {
+        Schema::table('menus', function (Blueprint $table) {
+            $table->dropForeign(['id_parent']);
+        });
         Schema::dropIfExists('Menus');
     }
 }
