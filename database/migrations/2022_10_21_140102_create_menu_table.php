@@ -18,8 +18,12 @@ class CreateMenuTable extends Migration
             $table->string('name')->unique();
             $table->unsignedBigInteger('id_parent')->nullable();
             $table->string('slug');
-            $table->enum('type',['parent','child']);
+            $table->enum('type', ['parent', 'child']);
             $table->timestamps();
+        });
+
+        Schema::table('menus', function (Blueprint $table) {
+            $table->foreign('id_parent')->references('id')->on('menus');
         });
     }
 

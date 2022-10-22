@@ -64,8 +64,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('menu', [MenuController::class, 'index'])->name('menu');
     Route::get('menu/data', [MenuController::class, 'data'])->name('menu.data');
+    Route::get('menu/data-user', [MenuController::class, 'dataUser'])->name('menu.data-user');
 
     Route::post('menu/store', [MenuController::class, 'store'])->name('menu.store');
     Route::post('menu/update', [MenuController::class, 'update'])->name('menu.update');
     Route::post('menu/destroy', [MenuController::class, 'destroy'])->name('menu.destroy');
+    Route::post('menu/store-user', [MenuController::class, 'storeUser'])->name('menu.storeUser');
+    Route::post('menu/destroy-user', [MenuController::class, 'destroyUser'])->name('menu.destroyUser');
 });
