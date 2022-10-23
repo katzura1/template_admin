@@ -24,10 +24,10 @@ Last, edit .env file change name database with yours and run database migration 
 
 ## Features
 
-- Auth + Email function (Login, Register, Reset Password)
+- Auth (Login, Register, Reset Password) with email function
 - CRUD + Datatables Side Server
-- Dynamic Sidebar
-- AdminLTE 3 theme
+- Dynamic Sidebar, toogle dark / light theme
+- AdminLTE 3 theme (for mazer switch to branch mazer)
 
 ## Screenshots
 
