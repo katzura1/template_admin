@@ -16,7 +16,7 @@ Then, run composer update
   composer update
 ```
 
-Last, edit .env file change name database with yours and run databas migration with seeder.
+Last, edit .env file change name database with yours and run database migration with seeder.
 
 ```bash
   php artisan migrate --seed
