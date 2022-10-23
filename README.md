@@ -7,7 +7,7 @@ Hello, this is ready-to-use admin template for speed up your project build.
 First, clone this project with command
 
 ```bash
-  git clone https://katzura1.github.com/template_admin
+  git clone https://katzura1.github.com/template_admin.git
 ```
 
 Then, run composer update
