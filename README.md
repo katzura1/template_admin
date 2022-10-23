@@ -41,4 +41,4 @@ Last, edit .env file change name database with yours and run databas migration w
 
 ## Demo
 
-_[Click Here](https://google.com)_
+_[Click Here](https://demo-admin.katzura.my.id)_
