@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserLevelController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,4 +72,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('menu/destroy', [MenuController::class, 'destroy'])->name('menu.destroy');
     Route::post('menu/store-user', [MenuController::class, 'storeUser'])->name('menu.storeUser');
     Route::post('menu/destroy-user', [MenuController::class, 'destroyUser'])->name('menu.destroyUser');
+});
+
+/*
+|--------------------------------------------------------------------------
+| User Routes
+|--------------------------------------------------------------------------
+ */
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('user', [UserController::class, 'index'])->name('user');
+    Route::get('user/data', [UserController::class, 'data'])->name('user.data');
+
+    Route::post('user/store', [UserController::class, 'store'])->name('user.store');
+    Route::post('user/update', [UserController::class, 'update'])->name('user.update');
+    Route::post('user/update-password', [UserController::class, 'updatePassword'])->name('user.update-password');
 });

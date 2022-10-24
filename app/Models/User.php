@@ -55,4 +55,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new \App\Notifications\Auth\QueuedVerifyEmail);
     }
+
+    public function user_level()
+    {
+        return $this->belongsTo(UserLevel::class, 'id_user_level', 'id');
+    }
 }
